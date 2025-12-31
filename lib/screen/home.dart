@@ -1,4 +1,5 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide kToolbarHeight;
+import 'package:repeated_habit_tracker/util/constants.dart';
 import 'package:repeated_habit_tracker/widget/welcome_back_messsage.dart';
 
 class Home extends StatefulWidget {
@@ -13,9 +14,9 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight: 100,
-        centerTitle: false,
-        titleSpacing: 50,
+        toolbarHeight: kToolbarsHeight,
+        centerTitle: kCenterTitle,
+        titleSpacing: kTitleSpacing,
         title: WelcomeBackMesssage(userName: 'Dimitrios'),
       ),
     );
