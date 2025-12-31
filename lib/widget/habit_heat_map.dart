@@ -16,7 +16,8 @@ class _HabitHeatMapState extends State<HabitHeatMap> {
         children: [
           Align(
             alignment: Alignment.topLeft,
-            child: Text('Habits completed today: 0')),
+            child: Text('Habits completed today: 0'),
+          ),
           Placeholder(fallbackHeight: 250),
         ],
       ),
