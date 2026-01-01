@@ -10,24 +10,24 @@ class WelcomeBackMesssage extends StatelessWidget {
     return Stack(
       children: [
         Padding(
-          padding: const EdgeInsets.only(bottom: 40),
+          padding: const EdgeInsets.only(top: 20),
           child: Text(
             'Welcome back,',
             style: TextStyle(
-              fontSize: 35,
+              fontSize: 30,
               fontWeight: FontWeight.bold,
             )
           ),
         ),
 
         Padding(
-          padding: const EdgeInsets.only(top: 40),
+          padding: const EdgeInsets.only(top: 50),
           child: Text(
             userName,
             style: TextStyle(
               fontSize: 30,
               fontWeight: FontWeight.bold,
-              color: Colors.lightGreen,
+              color: Theme.of(context).colorScheme.secondary,
             )
           ),
         ),
