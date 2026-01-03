@@ -2,14 +2,16 @@ import 'package:flutter/material.dart';
 
 class HabitTile extends StatelessWidget {
   final String habitName;
-  final bool isChecked;
-  final Function(bool?)? onChanged;
+  final bool isCheckboxChecked;
+  final Function(bool?)? onCheckboxChanged;
+  final Function()? onDeletePressed;
 
   const HabitTile({
     super.key,
     required this.habitName,
-    required this.isChecked,
-    required this.onChanged,
+    required this.isCheckboxChecked,
+    required this.onCheckboxChanged,
+    required this.onDeletePressed,
   });
 
   @override
@@ -24,10 +26,15 @@ class HabitTile extends StatelessWidget {
         padding: EdgeInsets.all(10),
         child: Row(
           children: [
-            Checkbox(value: isChecked, onChanged: onChanged),
+            Checkbox(value: isCheckboxChecked, onChanged: onCheckboxChanged),
             Text(
               habitName,
               style: TextStyle(fontWeight: FontWeight.w400, fontSize: 15),
+            ),
+            Spacer(),
+            IconButton(
+              onPressed: onDeletePressed, 
+              icon: Icon(Icons.remove_circle),
             ),
           ],
         ),

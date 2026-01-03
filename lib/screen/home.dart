@@ -47,16 +47,22 @@ class _HomeState extends State<Home> {
   void addHabit() {
     showDialog(context: context, builder: (context) {
       return HabitCreator(
-        saveTap: saveTask,
+        saveTap: saveHabit,
         controller: textController,
       );
     });
   }
 
-  void saveTask() {
+  void saveHabit() {
     setState(() {
       db.todaysHabitList.add(Habit(textController.text, false));
       textController.clear();
+    });
+  }
+
+  void removeHabit(int index) {
+    setState(() {
+      db.todaysHabitList.removeAt(index);
     });
   }
 
@@ -97,8 +103,9 @@ class _HomeState extends State<Home> {
               itemBuilder: (context, index) {
                 return HabitTile(
                   habitName: db.todaysHabitList[index].name,
-                  isChecked: db.todaysHabitList[index].isChecked, 
-                  onChanged: (value) => checkboxChange(value, index),
+                  isCheckboxChecked: db.todaysHabitList[index].isChecked, 
+                  onCheckboxChanged: (value) => checkboxChange(value, index),
+                  onDeletePressed: () => removeHabit(index),
                 );
               },
             ),
