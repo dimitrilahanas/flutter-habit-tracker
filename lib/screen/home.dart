@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:repeated_habit_tracker/util/constants.dart';
 import 'package:repeated_habit_tracker/widget/habit_creator.dart';
 
+import 'package:repeated_habit_tracker/model/habit.dart';
+
 import 'package:repeated_habit_tracker/widget/welcome_back_messsage.dart';
 import 'package:repeated_habit_tracker/widget/habit_heat_map.dart';
 import 'package:repeated_habit_tracker/widget/habit_tile.dart';
@@ -14,13 +16,11 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  List habitList = [
-    ['Drink Water', false],
-  ];
+  final List<Habit> habitData = [];
 
   void checkboxChange(bool? value, int index) {
     setState(() {
-      habitList[index][1] = !habitList[index][1];
+      habitData[index].isChecked = !habitData[index].isChecked;
     });
   }
 
@@ -36,7 +36,7 @@ class _HomeState extends State<Home> {
 
   void saveTask() {
     setState(() {
-      habitList.add([textController.text, false]);
+      habitData.add(Habit(textController.text, false));
     });
   }
 
@@ -73,11 +73,11 @@ class _HomeState extends State<Home> {
 
           Expanded(
             child: ListView.builder(
-              itemCount: habitList.length,
+              itemCount: habitData.length,
               itemBuilder: (context, index) {
                 return HabitTile(
-                  habitName: habitList[index][0],
-                  isChecked: habitList[index][1], 
+                  habitName: habitData[index].name,
+                  isChecked: habitData[index].isChecked, 
                   onChanged: (value) => checkboxChange(value, index),
                 );
               },
