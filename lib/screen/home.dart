@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:repeated_habit_tracker/util/constants.dart';
+import 'package:repeated_habit_tracker/widget/habit_creator.dart';
 
 import 'package:repeated_habit_tracker/widget/welcome_back_messsage.dart';
 import 'package:repeated_habit_tracker/widget/habit_heat_map.dart';
@@ -15,16 +16,27 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   List habitList = [
     ['Drink Water', false],
-    ['Drink food', false],
-    ['Drink Water', false],
-    ['Drink food', false],
-    ['Drink Water', false],
-    ['Drink food', false],
   ];
 
   void checkboxChange(bool? value, int index) {
     setState(() {
       habitList[index][1] = !habitList[index][1];
+    });
+  }
+
+  final textController = TextEditingController();
+
+  void addHabit() {
+    showDialog(context: context, builder: (context) {
+      return HabitCreator(
+        saveTap: saveTask,
+        controller: textController);
+    });
+  }
+
+  void saveTask() {
+    setState(() {
+      habitList.add([textController.text, false]);
     });
   }
 
@@ -50,10 +62,11 @@ class _HomeState extends State<Home> {
             padding: const EdgeInsets.only(top: 30, left: 40),
             child: Align(
               alignment: Alignment.centerLeft,
-              child: Text('Habits',
+              child: Text('Todays Habits',
               style: TextStyle(
                   fontSize: 30,
                   fontWeight: FontWeight.bold,
+                  letterSpacing: -1,
                 )),
             ),
           ),
@@ -72,6 +85,11 @@ class _HomeState extends State<Home> {
           ),
 
         ],
+      ),
+
+      floatingActionButton: FloatingActionButton(
+        onPressed: addHabit,
+        child: Icon(Icons.add),
       ),
     );
   }
