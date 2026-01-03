@@ -3,6 +3,7 @@ import 'package:repeated_habit_tracker/util/constants.dart';
 
 import 'package:repeated_habit_tracker/widget/welcome_back_messsage.dart';
 import 'package:repeated_habit_tracker/widget/habit_heat_map.dart';
+import 'package:repeated_habit_tracker/widget/habit_tile.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -12,6 +13,21 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  List habitList = [
+    ['Drink Water', false],
+    ['Drink food', false],
+    ['Drink Water', false],
+    ['Drink food', false],
+    ['Drink Water', false],
+    ['Drink food', false],
+  ];
+
+  void checkboxChange(bool? value, int index) {
+    setState(() {
+      habitList[index][1] = !habitList[index][1];
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,6 +57,20 @@ class _HomeState extends State<Home> {
                 )),
             ),
           ),
+
+          Expanded(
+            child: ListView.builder(
+              itemCount: habitList.length,
+              itemBuilder: (context, index) {
+                return HabitTile(
+                  habitName: habitList[index][0],
+                  isChecked: habitList[index][1], 
+                  onChanged: (value) => checkboxChange(value, index),
+                );
+              },
+            ),
+          ),
+
         ],
       ),
     );

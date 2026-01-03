@@ -20,10 +20,19 @@ class _HabitHeatMapState extends State<HabitHeatMap> {
         showColorTip: false,
         datasets: {
           DateTime(2026, 1, 1): 3,
-          DateTime(2021, 1, 7): 7,
+          // DateTime(2021, 1, 7): 7,
           DateTime(2021, 1, 8): 10,
           DateTime(2021, 1, 9): 13,
           DateTime(2021, 1, 13): 6,
+        },
+
+        onClick: (DateTime value) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('You completed:'),
+              duration: Duration(seconds: 3),
+              ),
+          );
         },
 
         colorsets: const {
