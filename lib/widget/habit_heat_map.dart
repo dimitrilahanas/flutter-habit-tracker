@@ -17,7 +17,7 @@ class _HabitHeatMapState extends State<HabitHeatMap> {
         defaultColor: Colors.white,
         flexible: false,
         colorMode: ColorMode.color,
-        showColorTip: false,
+        showColorTip: true,
         datasets: {
           DateTime(2026, 1, 1): 3,
           // DateTime(2021, 1, 7): 7,
