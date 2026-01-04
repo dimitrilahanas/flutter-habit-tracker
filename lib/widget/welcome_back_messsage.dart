@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class WelcomeBackMesssage extends StatelessWidget {
-  final String userName;
+  final String? userName;
 
   const WelcomeBackMesssage({super.key, required this.userName});
 
@@ -23,7 +23,7 @@ class WelcomeBackMesssage extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(top: 50),
           child: Text(
-            userName,
+            userName ?? 'user',
             style: TextStyle(
               fontSize: 30,
               fontWeight: FontWeight.bold,

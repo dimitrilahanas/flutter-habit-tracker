@@ -76,7 +76,7 @@ class _HomeState extends State<Home> {
         toolbarHeight: kToolbarsHeight,
         centerTitle: kCenterTitle,
         titleSpacing: kTitleSpacing,
-        title: WelcomeBackMesssage(userName: 'Dimitrios'),
+        title: WelcomeBackMesssage(userName: null),
       ),
 
       body: Column(
