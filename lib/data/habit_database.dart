@@ -1,10 +1,16 @@
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:repeated_habit_tracker/model/habit.dart';
+import 'package:repeated_habit_tracker/util/datetime_format.dart';
 
-final _myBox = Hive.box("Habit_Database");
+late Box _myBox;
 
 class HabitDatabase {
+  final _myBox = Hive.box("Habit_Database");
   List<Habit> todaysHabitList = [];
+
+  String getTodayKey() {
+    return hiveKeyForDate(DateTime.now());
+  }
 
   void createDefaultData() {
     todaysHabitList = [
@@ -13,7 +19,20 @@ class HabitDatabase {
     ];
   }
 
-  void loadData() {}
+  void loadData() {
+  final savedToday = _myBox.get(getTodayKey());
 
-  void updateDatabase() {}
+  if (savedToday != null) {
+    todaysHabitList = (savedToday as List)
+        .map((item) => item as Habit)
+        .toList();
+  } else {
+    createDefaultData();
+    updateDatabase();
+  }
+}
+
+  void updateDatabase() {
+    _myBox.put(getTodayKey(), todaysHabitList);
+  }
 }

@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:repeated_habit_tracker/model/habit.dart';
 import 'package:repeated_habit_tracker/screen/home.dart';
 import 'package:repeated_habit_tracker/util/default_theme.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
-void main() async {
+void main() async { 
   await Hive.initFlutter();
+
+  Hive.registerAdapter(HabitAdapter());
 
   await Hive.openBox("Habit_Database");
 

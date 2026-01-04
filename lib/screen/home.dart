@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:repeated_habit_tracker/data/habit_database.dart';
 import 'package:repeated_habit_tracker/util/constants.dart';
 import 'package:repeated_habit_tracker/widget/habit_creator.dart';
@@ -19,38 +18,33 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   HabitDatabase db = HabitDatabase();
-  final _myBox = Hive.box("Habit_Database");
 
   @override
   void initState() {
-    if (_myBox.get("CURRENT_HABIT_LIST") == null) {
-      db.createDefaultData();
-    }
-
-    else {
-      db.loadData();
-    }
-
-    db.updateDatabase();
-
     super.initState();
+
+    db.loadData();
   }
 
   void checkboxChange(bool? value, int index) {
     setState(() {
       db.todaysHabitList[index].isChecked = value!;
     });
+
+    db.updateDatabase();
   }
 
   final textController = TextEditingController();
 
   void addHabit() {
-    showDialog(context: context, builder: (context) {
-      return HabitCreator(
-        saveTap: saveHabit,
-        controller: textController,
-      );
-    });
+    showDialog(
+      context: context,
+      builder: (context) {
+        return HabitCreator(saveTap: saveHabit, controller: textController);
+      },
+    );
+
+    db.updateDatabase();
   }
 
   void saveHabit() {
@@ -58,12 +52,16 @@ class _HomeState extends State<Home> {
       db.todaysHabitList.add(Habit(textController.text, false));
       textController.clear();
     });
+
+    db.updateDatabase();
   }
 
   void removeHabit(int index) {
     setState(() {
       db.todaysHabitList.removeAt(index);
     });
+
+    db.updateDatabase();
   }
 
   @override
@@ -88,12 +86,14 @@ class _HomeState extends State<Home> {
             padding: const EdgeInsets.only(top: 30, left: 40),
             child: Align(
               alignment: Alignment.centerLeft,
-              child: Text("Today's Habits",
-              style: TextStyle(
+              child: Text(
+                "Today's Habits",
+                style: TextStyle(
                   fontSize: 30,
                   fontWeight: FontWeight.bold,
                   letterSpacing: -1,
-                )),
+                ),
+              ),
             ),
           ),
 
@@ -103,14 +103,13 @@ class _HomeState extends State<Home> {
               itemBuilder: (context, index) {
                 return HabitTile(
                   habitName: db.todaysHabitList[index].name,
-                  isCheckboxChecked: db.todaysHabitList[index].isChecked, 
+                  isCheckboxChecked: db.todaysHabitList[index].isChecked,
                   onCheckboxChanged: (value) => checkboxChange(value, index),
                   onDeletePressed: () => removeHabit(index),
                 );
               },
             ),
           ),
-
         ],
       ),
 
